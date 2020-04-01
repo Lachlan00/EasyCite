@@ -6,6 +6,8 @@ A simple Python script to download .bib citations and PDFs. Bibtex files pulled 
 
 Set up the directories you want to save the bib files and pdf directories to in `EasyCite.py`. Then execute the script. Then just copy a doi to the clipboard and press enter.
 
-![](assets/EasyCite_720.mov)
+![](assets/EasyCite_720.gif)
 
-## Obligatory **"do not use this illegally"** statement
+### Obligatory "do not use this illegally" statement
+
+Do not do illegal things with this.

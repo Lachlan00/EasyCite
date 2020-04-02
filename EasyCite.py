@@ -33,7 +33,7 @@ while True:
     doi = re.sub(r'\s+', '', doi)
     doi = doi.replace('http://doi.org/'.upper(),'')
     doi = doi.replace('https://doi.org/'.upper(),'')
-    print('Getting bib file for DOI: '+doi)
+    print('Getting bib file for DOI: '+doi.lower())
     # get bib citation
     url = doi_base_url + doi
     req = urllib.request.Request(url)
@@ -57,6 +57,9 @@ while True:
         # cite_key
         cite_key = name_parts['last'][0].capitalize()+':'+bibtex.entries[0]['year']
         file_key = name_parts['last'][0].capitalize()+'_'+bibtex.entries[0]['year']
+        # clean keys of bad characters characters
+        cite_key = ''.join(ch for ch in cite_key if ch.isalnum() or ch == ':')
+        file_key = ''.join(ch for ch in cite_key if ch.isalnum() or ch == '_')  
         # check if correct paper before continue
         if not (yes_or_no('\nPaper data correct?')):
             print('Download aborted..')

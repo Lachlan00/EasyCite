@@ -59,7 +59,7 @@ while True:
         file_key = name_parts['last'][0].capitalize()+'_'+bibtex.entries[0]['year']
         # clean keys of bad characters characters
         cite_key = ''.join(ch for ch in cite_key if ch.isalnum() or ch == ':')
-        file_key = ''.join(ch for ch in cite_key if ch.isalnum() or ch == '_')  
+        file_key = ''.join(ch for ch in file_key if ch.isalnum() or ch == '_')  
         # check if correct paper before continue
         if not (yes_or_no('\nPaper data correct?')):
             print('Download aborted..')

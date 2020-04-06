@@ -70,8 +70,18 @@ while True:
             # make sure not the same paper
             with open(bib_output+'/'+file_key+'.bib') as fp:
                 bib_prev = bibtexparser.load(fp)
-            if bibtex.entries[0]['doi'].upper() == bib_prev.entries[0]['doi'].upper():
-                print('Error: Paper already exists in citation library!')
+            if 'doi' in bib_prev.entries[0]:    
+                if bibtex.entries[0]['doi'].upper() == bib_prev.entries[0]['doi'].upper().replace(
+                    'http://doi.org/'.upper(),'').replace('https://doi.org/'.upper(),''):
+                    print('Error: Paper already exists in citation library!')
+                    print('Download aborted..')
+                    continue
+            # manual check
+            print('\nSimilar paper found in library:\ns')
+            with open(bib_output+'/'+file_key+'.bib') as fp:
+                bib_lines = ''.join(fp.readlines())
+            print(bib_lines)
+            if (yes_or_no('\nIs this the same paper?')):
                 print('Download aborted..')
                 continue
             # add suffix
@@ -103,8 +113,7 @@ while True:
         except:
             print('Failed to download PDF..')
             os.rmdir(pdf_output+'/'+file_key+suffix)
-
-
+            
     except HTTPError as e:
         if e.code == 404:
             print('\nError: DOI not found.')

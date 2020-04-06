@@ -9,6 +9,7 @@ import subprocess
 from scidownl.scihub import *
 import glob
 from termcolor import colored, cprint
+import sys
 
 # setup
 bib_output = '/Directory/where/you/want/to/save/the/bib/files'
@@ -30,7 +31,10 @@ def yes_or_no(question):
 
 # get citation data
 while True:
-    input(colored('\nPress Enter to get DOI from clipboard..', prompt_colour, attrs=['bold']))
+    check_exit = input(colored('\nPress Enter to get DOI from clipboard.. ', prompt_colour, attrs=['bold']))
+    if check_exit.lower() == 'exit' or check_exit == 'q' or check_exit == 'quit':
+        print('\nClosing program..\n')
+        sys.exit()
     doi = pyperclip.paste().upper()
     doi = re.sub(r'\s+', '', doi)
     doi = doi.replace('http://doi.org/'.upper(),'')

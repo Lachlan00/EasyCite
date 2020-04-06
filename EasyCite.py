@@ -8,6 +8,7 @@ import os
 import subprocess
 from scidownl.scihub import *
 import glob
+from termcolor import colored, cprint
 
 # setup
 bib_output = '/Directory/where/you/want/to/save/the/bib/files'
@@ -15,10 +16,11 @@ pdf_output = '/Directory/where/you/want/to/save/the/pdf/files'
 
 # other config
 doi_base_url = 'http://dx.doi.org/'
+prompt_colour = 'blue'
 
 # yes or no query
 def yes_or_no(question):
-    reply = str(input(question+' (y/n): ')).lower().strip()
+    reply = str(input(colored(question+' (y/n): ', prompt_colour, attrs=['bold']))).lower().strip()
     if reply == 'y':
         return True
     if reply == 'n':
@@ -28,7 +30,7 @@ def yes_or_no(question):
 
 # get citation data
 while True:
-    input('\nPress Enter to get DOI from clipboard..')
+    input(colored('\nPress Enter to get DOI from clipboard..', prompt_colour, attrs=['bold']))
     doi = pyperclip.paste().upper()
     doi = re.sub(r'\s+', '', doi)
     doi = doi.replace('http://doi.org/'.upper(),'')
@@ -113,7 +115,7 @@ while True:
         except:
             print('Failed to download PDF..')
             os.rmdir(pdf_output+'/'+file_key+suffix)
-            
+
     except HTTPError as e:
         if e.code == 404:
             print('\nError: DOI not found.')

@@ -8,6 +8,13 @@ Set up the directories you want to save the bib files and pdf directories to in 
 
 ![](assets/EasyCite.gif)
 
+## Dependencies
+
+- pyperclip
+- bibtexparser
+- scidownl.scihub
+- termcolor
+
 ## Obligatory "do not use this illegally" statement
 
 Do not do illegal things with this.

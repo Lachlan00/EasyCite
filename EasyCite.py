@@ -10,14 +10,16 @@ from scidownl.scihub import *
 import glob
 from termcolor import colored, cprint
 import sys
-
-# setup
-bib_output = '/Directory/where/you/want/to/save/the/bib/files'
-pdf_output = '/Directory/where/you/want/to/save/the/pdf/files'
+# local
+from config import directoryDict
 
 # other config
 doi_base_url = 'http://dx.doi.org/'
 prompt_colour = 'blue'
+
+# Update scihub links
+print('\nUpdating SciHub links..')
+subprocess.call("./updateSciHub.sh")
 
 # yes or no query
 def yes_or_no(question):
@@ -28,6 +30,15 @@ def yes_or_no(question):
         return False
     else:
         return yes_or_no("Not a vaild response..")
+
+# Setup directory
+print(colored('\nWhich bibliogrpahy do you want to use?', prompt_colour, attrs=['bold']))
+for i in range(0,len(directoryDict)):
+    print(str(i+1)+'. '+list(directoryDict.keys())[i])
+bib_no = int(input(colored('\nEnter value: ', prompt_colour, attrs=['bold'])).lower()) - 1
+print(colored('\nUsing bibliogrpahy '+list(directoryDict.keys())[bib_no], prompt_colour, attrs=['bold']))
+bib_output = list(directoryDict.values())[bib_no]['bib']
+pdf_output = list(directoryDict.values())[bib_no]['pdf']
 
 # get citation data
 while True:
@@ -53,7 +64,10 @@ while True:
         bibtex = bibtexparser.loads(bibtex_str)
         # make new cite key
         # get authors
-        auth_str = bibtex.entries[0]['author']
+        if 'author' in bibtex.entries[0]:
+            auth_str = bibtex.entries[0]['author']
+        else:
+            auth_str = bibtex.entries[0]['editor']
         # get primary author
         primary_auth = auth_str.split(" and ")[0]
         # get last name and first name
@@ -109,14 +123,21 @@ while True:
             continue
 
         print('\nDownloading PDF..')
-        try:
-        # Get the PDF
-            SciHub(doi, pdf_output+'/'+file_key+suffix).download(choose_scihub_url_index=5)
-            # move file from temp folder to main
-            pdf_file = [f for f in glob.glob(pdf_output+'/'+file_key+suffix + "**/*.pdf", recursive=True)]
-            os.rename(pdf_file[0], pdf_output+'/'+file_key+suffix+'.pdf')
-            os.rmdir(pdf_output+'/'+file_key+suffix)
-        except:
+        i = 1
+        while i <= 5:
+            try:
+            # Get the PDF
+                SciHub(doi, pdf_output+'/'+file_key+suffix).download(choose_scihub_url_index=i)
+                # move file from temp folder to main
+                pdf_file = [f for f in glob.glob(pdf_output+'/'+file_key+suffix + "**/*.pdf", recursive=True)]
+                os.rename(pdf_file[0], pdf_output+'/'+file_key+suffix+'.pdf')
+                os.rmdir(pdf_output+'/'+file_key+suffix)
+                i = 1e3
+            except:
+                if i <= 5:
+                    print('SciHub url failed, trying next url..')
+                i += 1
+        if i == 6:
             print('Failed to download PDF..')
             os.rmdir(pdf_output+'/'+file_key+suffix)
 

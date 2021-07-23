@@ -1,0 +1,2 @@
+#!/bin/bash
+scidownl -u

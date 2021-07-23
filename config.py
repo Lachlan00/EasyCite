@@ -4,11 +4,11 @@ any papers and bib files downloaded by EasCite will be saved. When
 you launch EasyCite you will be asked to select one of these bibliographies.
 """
 directoryDict = {
-    'Bibliogrpahy1': {
+    'Bibliography1': {
         'bib':'/path/to/directory/where/bib/files/saved/bib',
         'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
         },
-    'Bibliogrpahy2': {
+    'Bibliography2': {
         'bib':'/path/to/directory/where/bib/files/saved/bib',
         'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
         }

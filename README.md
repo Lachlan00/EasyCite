@@ -35,3 +35,7 @@ To quit just type `q`.
 ## Statement
 
 Do not do illegal things with this..
+
+## Statement 2
+
+Elsevier makes £2 billion a year restricting access to publicly funded research..

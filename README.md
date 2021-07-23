@@ -8,11 +8,11 @@ First set up where you want your pdf and bib files to be saved. This is done in 
 
 ```
 directoryDict = {
-    'Bibliogrpahy1': {
+    'Bibliography1': {
         'bib':'/path/to/directory/where/bib/files/saved/bib',
         'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
         },
-    'Bibliogrpahy2': {
+    'Bibliography2': {
         'bib':'/path/to/directory/where/bib/files/saved/bib',
         'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
         }

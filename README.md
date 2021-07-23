@@ -4,7 +4,24 @@ A simple Python script to download bibtex citations and paper PDFs. Bibtex files
 
 ## How to use
 
-Set up the directories you want to save the bib files and pdf directories to in `EasyCite.py`. Then execute the script. Then just copy a doi to the clipboard and press enter.
+First set up where you want your pdf and bib files to be saved. This is done in the `config.py` file. Each bibliogrpahy is stored as a nested dictionary. When the program starts it will ask you which bibliogrpahy you want to use (i.e. where will the files be saved). 
+
+```
+directoryDict = {
+    'Bibliogrpahy1': {
+        'bib':'/path/to/directory/where/bib/files/saved/bib',
+        'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
+        },
+    'Bibliogrpahy2': {
+        'bib':'/path/to/directory/where/bib/files/saved/bib',
+        'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
+        }
+}
+```
+
+Next execute the script with `python EasyCite.py`. Then just copy a doi to the clipboard and press enter.
+
+To quit just type `q`.
 
 ![](assets/EasyCite.gif)
 
@@ -15,6 +32,6 @@ Set up the directories you want to save the bib files and pdf directories to in 
 - scidownl.scihub
 - termcolor
 
-## Obligatory "do not use this illegally" statement
+## Statement
 
-Do not do illegal things with this.
+Do not do illegal things with this..

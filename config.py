@@ -5,15 +5,11 @@ you launch EasyCite you will be asked to select one of these bibliographies.
 """
 directoryDict = {
     'Bibliogrpahy1': {
-        'bib':'/path/to/directory/where/bib/files/saved',
-        'pdf':'/path/to/directory/where/pdf/files/saved'
+        'bib':'/path/to/directory/where/bib/files/saved/bib',
+        'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
         },
     'Bibliogrpahy2': {
-        'bib':'/path/to/directory/where/bib/files/saved',
-        'pdf':'/path/to/directory/where/pdf/files/saved'
-        },
-    'TEST': {
-        'bib':'/Users/lachlanphillips/Desktop/bib',
-        'pdf':'/Users/lachlanphillips/Desktop/pdf',
-    }
+        'bib':'/path/to/directory/where/bib/files/saved/bib',
+        'pdf':'/path/to/directory/where/pdf/files/saved/pdf'
+        }
 }

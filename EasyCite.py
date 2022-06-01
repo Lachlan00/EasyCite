@@ -6,10 +6,11 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 import os
 import subprocess
-from scidownl.scihub import *
+from scidownl import *
 import glob
 from termcolor import colored, cprint
 import sys
+import re
 # local
 from config import directoryDict
 
@@ -19,7 +20,9 @@ prompt_colour = 'blue'
 
 # Update scihub links
 print('\nUpdating SciHub links..')
-subprocess.call("./updateSciHub.sh")
+bash_command = "scidownl domain.update"
+process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+output, error = process.communicate()
 
 # yes or no query
 def yes_or_no(question):
@@ -40,10 +43,10 @@ print(colored('\nUsing bibliogrpahy '+list(directoryDict.keys())[bib_no], prompt
 bib_output = list(directoryDict.values())[bib_no]['bib']
 pdf_output = list(directoryDict.values())[bib_no]['pdf']
 
-# get citation data
+# Get citation data
 while True:
-    check_exit = input(colored('\nPress Enter to get DOI from clipboard.. ', prompt_colour, attrs=['bold']))
-    if check_exit.lower() == 'exit' or check_exit == 'q' or check_exit == 'quit':
+    command = input(colored('\nPress Enter to get DOI from clipboard.. ', prompt_colour, attrs=['bold'])).lower()
+    if command == 'exit' or command == 'q' or command == 'quit':
         print('\nClosing program..\n')
         sys.exit()
     doi = pyperclip.paste().upper()
@@ -66,8 +69,11 @@ while True:
         # get authors
         if 'author' in bibtex.entries[0]:
             auth_str = bibtex.entries[0]['author']
-        else:
+        elif 'editor' in bibtex.entries[0]:
             auth_str = bibtex.entries[0]['editor']
+        else:
+            print("\nNo author or editor present in bib file. Manual entry required!")
+            continue
         # get primary author
         primary_auth = auth_str.split(" and ")[0]
         # get last name and first name
@@ -123,23 +129,14 @@ while True:
             continue
 
         print('\nDownloading PDF..')
-        i = 1
-        while i <= 5:
-            try:
-            # Get the PDF
-                SciHub(doi, pdf_output+'/'+file_key+suffix).download(choose_scihub_url_index=i)
-                # move file from temp folder to main
-                pdf_file = [f for f in glob.glob(pdf_output+'/'+file_key+suffix + "**/*.pdf", recursive=True)]
-                os.rename(pdf_file[0], pdf_output+'/'+file_key+suffix+'.pdf')
-                os.rmdir(pdf_output+'/'+file_key+suffix)
-                i = 1e3
-            except:
-                if i <= 5:
-                    print('SciHub url failed, trying next url..')
-                i += 1
-        if i == 6:
-            print('Failed to download PDF..')
-            os.rmdir(pdf_output+'/'+file_key+suffix)
+        # Get the PDF
+        scihub_download(doi, out=pdf_output+'/'+file_key+suffix)
+        # move file from temp folder to main
+        # OBSOLETE
+        # print('Failed to download PDF..')
+        # remove_file = glob.glob(pdf_output+'/'+file_key+suffix+'*.tmp')
+        # if (len(remove_file) > 0):
+        #     os.remove(remove_file[0])
 
     except HTTPError as e:
         if e.code == 404:

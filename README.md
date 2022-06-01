@@ -1,6 +1,6 @@
 # EasyCite
 
-A simple Python script to download bibtex citations and paper PDFs. Bibtex files pulled from [http://dx.doi.org](http://dx.doi.org/) and PDFs downloaded from SciHub using [scidownl](https://pypi.org/project/scidownl/). 
+A simple Python script to download bibtex citations and paper PDFs. Bibtex files pulled from [http://dx.doi.org](http://dx.doi.org/) and PDFs downloaded using [scidownl](https://pypi.org/project/scidownl/). 
 
 ## How to use
 
@@ -29,13 +29,4 @@ To quit just type `q`.
 
 - pyperclip
 - bibtexparser
-- scidownl.scihub
 - termcolor
-
-## Statement
-
-Do not do illegal things with this..
-
-## Statement 2
-
-Elsevier makes £2 billion a year restricting access to publicly funded research..
